@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId // Identifiant unique au format ObjectId
+  email       String   @unique                                    // Email unique de l'utilisateur
+  firstName   String                                             // Prénom de l'utilisateur (optionnel)
+  lastName    String                                             // Nom de la famille Prénom de l'utilisateur (optionnel)
+  address     String?                                            // Adresse de l'utilisateur (optionnel)
+  phone       String                                            // Numéro de téléphone (optionnel)
+  password    String                                            // Mot de passe (optionnel)
+  category    String?                                            // Catégorie de l'utilisateur (optionnel)
+  age         Int?                                             // Âge de l'utilisateur
+  gender      String?                                            // Genre de l'utilisateur (ex : "male", "female")
+  createdAt   DateTime @default(now())                            // Date de création automatique
+  updatedAt   DateTime @updatedAt                                 // Mise à jour automatique à chaque modification
+}
