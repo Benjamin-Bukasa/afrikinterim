@@ -3,15 +3,17 @@ const prisma = new PrismaClient()
 
 
 //recupération de tous les utilisateurs
-const getUsers = async (req,res)=>{
-
+const getUsers = async (req, res) => {
     try {
-        const users = await prisma.user.findMany()
-        res.status(200).json(users)
+      const users = await prisma.user.findMany(); // Récupération des utilisateurs
+      res.status(200).json(users);
     } catch (error) {
-        res.status(200).json({message:`Erreur lors de la récupération des données dans le serveur`})
+      console.error("Erreur lors de la récupération des utilisateurs:", error); // Affiche l'erreur dans la console
+      res.status(500).json({
+        message: "Erreur serveur lors de la récupération des utilisateurs",
+      });
     }
-}
+  };
 
 //recupération d'un utilisateur 
 const getUser = async (req,res)=>{
@@ -19,7 +21,7 @@ const getUser = async (req,res)=>{
     try {
         const user = await prisma.user.findUnique({
             where:{
-                id: req.pramas.id
+                id: req.params.id
             }
         })
 
